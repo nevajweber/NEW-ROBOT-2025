@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Autonomous(name = "DriveAutoPID", group = "FTC")
+@Autonomous
 public class DriveAutoPID extends LinearOpMode {
 
     private DcMotor FLW, FRW, BLW, BRW;
