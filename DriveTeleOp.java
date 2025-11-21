@@ -27,8 +27,8 @@ public class DriveTeleOp extends LinearOpMode {
 
         // Directions (standard tank)
         FLW.setDirection(DcMotor.Direction.FORWARD);
-        BLW.setDirection(DcMotor.Direction.REVERSE);
-        FRW.setDirection(DcMotor.Direction.FORWARD);
+        BLW.setDirection(DcMotor.Direction.FORWARD);
+        FRW.setDirection(DcMotor.Direction.REVERSE);
         BRW.setDirection(DcMotor.Direction.REVERSE); 
 
         FLW.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -55,6 +55,15 @@ public class DriveTeleOp extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive()) {
+
+//===== SANITY CHECK (hold a to check if moters are going same direction) =====
+            if (gamepad1.a) {
+                FLW.setPower(0.3);
+                BLW.setPower(0.3);
+                FRW.setPower(0.3);
+                BRW.setPower(0.3);
+                continue;
+            }
 
             // ===== DRIVING (arcade, gamepad1) =====
             double drive = -gamepad1.left_stick_y;  // forward/back
