@@ -33,10 +33,10 @@ public class DriveAutoPID extends LinearOpMode {
         BLW = hardwareMap.get(DcMotor.class, "BLW");
 
         // Match TeleOp directions:
-        FLW.setDirection(DcMotor.Direction.REVERSE);
-        BLW.setDirection(DcMotor.Direction.REVERSE);
-        FRW.setDirection(DcMotor.Direction.FORWARD);
-        BRW.setDirection(DcMotor.Direction.FORWARD);
+        FLW.setDirection(DcMotor.Direction.FORWARD);
+        BLW.setDirection(DcMotor.Direction.FORWARD);
+        FRW.setDirection(DcMotor.Direction.REVERSE);
+        BRW.setDirection(DcMotor.Direction.REVERSE);
 
         FLW.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         BLW.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
