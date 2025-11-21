@@ -104,20 +104,18 @@ public class DriverTeleOp extends LinearOpMode {
             BLW.setPower(backLeftPower);
             BRW.setPower(backRightPower);
 
-            if (gamepad2.right_trigger > 0.1) {
-                intake.in(); //right trigger causes the intake motor spin in(forwards)
-
-            } else if (gamepad2.left_trigger > 0.1){
-                intake.out(); //left trigger causes the intake motor to spin out(backwards)
-
+          if (gamepad1.y) { // 'y' refers to the X button. This is true when held down.
+                intake.in();
+            } else if (gamepad1.a) { // '.a' refers to the Y button.
+                intake.out();
             } else {
-                intake.stop(); //none of the triggers are pressed then nothing happens(stops)!
+                intake.stop();
             }
 
-            if (gamepad2.right_bumper) {
+            if (gamepad2.x) {
                 outtake.in(); //right trigger causes the intake motor spin in(forwards)
 
-            } else if (gamepad2.left_bumper){
+            } else if (gamepad2.b){
                 outtake.out(); //left trigger causes the intake motor to spin out(backwards)
 
             } else {
