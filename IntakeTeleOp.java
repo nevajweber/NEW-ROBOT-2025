@@ -2,35 +2,37 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-
-/**
- * Subsystem class that controls the intake motor.
- */
 public class IntakeTeleOp {
-
-    private final DcMotor intakeMotor;
-
+    private DcMotor intakeMotor;
+    //declares a variable to represent intake motor
     public IntakeTeleOp(HardwareMap hardwareMap) {
+
+        //constructor (named the same as my class)
         intakeMotor = hardwareMap.get(DcMotor.class, "intake");
+        //connects the code to the motor in Control Hub
         intakeMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        //makes the motor stop
         intakeMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        //controls motor speed directly without encoder
         intakeMotor.setDirection(DcMotor.Direction.FORWARD);
+        //sets the rotation direction (can switch direction to REVERSE if the motor spins the wrong way).
     }
 
-    /** Intake in (collect). */
     public void in() {
         intakeMotor.setPower(1.0);
-    }
+        //spins the motor forwards (intake in)
 
-    /** Intake out (eject). */
+    }
     public void out() {
         intakeMotor.setPower(-1.0);
+        //spins the motor backwards(outtake)
     }
-
-    /** Stop intake. */
     public void stop() {
         intakeMotor.setPower(0.0);
+        //stops the motor completely
+
     }
+
+
+
 }
-
-
