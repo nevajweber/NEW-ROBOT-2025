@@ -82,23 +82,24 @@ public class DriveTeleOp extends LinearOpMode {
             FRW.setPower(rightPower);
             BRW.setPower(rightPower);
 
-            // ===== INTAKE (gamepad2 triggers) =====
-            if (gamepad2.right_trigger > 0.1) {
+           if (gamepad1.y) { // 'y' refers to the X button. This is true when held down.
                 intake.in();
-            } else if (gamepad2.left_trigger > 0.1) {
+            } else if (gamepad1.a) { // '.a' refers to the Y button.
                 intake.out();
             } else {
                 intake.stop();
             }
 
-            // ===== OUTTAKE MOTOR (gamepad2 bumpers) =====
-            if (gamepad2.right_bumper) {
-                outtakeMotor.in();     // up/forward
-            } else if (gamepad2.left_bumper) {
-                outtakeMotor.out();    // down/reverse
+            if (gamepad2.x) {
+                outtake.in(); //right trigger causes the intake motor spin in(forwards)
+
+            } else if (gamepad2.b){
+                outtake.out(); //left trigger causes the intake motor to spin out(backwards)
+
             } else {
-                outtakeMotor.stop();
+                outtake.stop(); //none of the triggers are pressed then nothing happens(stops)!
             }
+
 
             // ===== FLIPPER SERVO (gamepad2 A/B/X) =====
             if (gamepad2.a) {
