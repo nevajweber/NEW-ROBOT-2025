@@ -94,19 +94,19 @@ public class DriveTeleOp extends LinearOpMode {
 
             
            if (gamepad1.left_trigger) { // 'y' refers to the X button. This is true when held down.
-                intake.in();
+                spindexer.in();
             } else if (gamepad1.left_bumper) { // '.a' refers to the Y button.
-                intake.out();
+                spindexer.out();
             } else {
-                intake.stop();
+                spindexer.stop();
             }
 
              if (gamepad2.left_trigger) { // 'y' refers to the X button. This is true when held down.
-                intake.in();
+                spindexer.in();
             } else if (gamepad2.left_bumper) { // '.a' refers to the Y button.
-                intake.out();
+                spindexer.out();
             } else {
-                intake.stop();
+                spindexer.stop();
             }
             
             if (gamepad2.x) {
