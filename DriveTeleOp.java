@@ -30,7 +30,7 @@ public class DriveTeleOp extends LinearOpMode {
         FLW.setDirection(DcMotor.Direction.FORWARD);
         BLW.setDirection(DcMotor.Direction.FORWARD);
         FRW.setDirection(DcMotor.Direction.REVERSE);
-        BRW.setDirection(DcMotor.Direction.REVERSE); 
+        BRW.setDirection(DcMotor.Direction.REVERSE);
 
         FLW.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         BLW.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -43,11 +43,11 @@ public class DriveTeleOp extends LinearOpMode {
         BRW.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         // ---------- SUBSYSTEMS ----------
-        intake       = new IntakeTeleOp(hardwareMap);
-        outtakeMotor = new OuttakeTeleOp(hardwareMap);
+        intake         = new IntakeTeleOp(hardwareMap);
+        outtakeMotor   = new OuttakeTeleOp(hardwareMap);
         spindexerMotor = new SpindexerTeleOp(hardwareMap);
-        flipper      = new OuttakeServo(hardwareMap);
-        arm          = new DualTorqueServos(hardwareMap);
+        flipper        = new OuttakeServo(hardwareMap);
+        arm            = new DualTorqueServos(hardwareMap);
 
         telemetry.addLine("DriveTeleOp Initialized");
         telemetry.addLine("gamepad1: drive");
@@ -58,7 +58,7 @@ public class DriveTeleOp extends LinearOpMode {
 
         while (opModeIsActive()) {
 
-//===== SANITY CHECK (hold a to check if moters are going same direction) =====
+            // ===== SANITY CHECK (hold A to check if motors are going same direction) =====
             if (gamepad1.a) {
                 FLW.setPower(0.3);
                 BLW.setPower(0.3);
@@ -84,41 +84,41 @@ public class DriveTeleOp extends LinearOpMode {
             FRW.setPower(rightPower);
             BRW.setPower(rightPower);
 
-           if (gamepad1.y) { // 'y' refers to the X button. This is true when held down.
+            // ===== INTAKE (gamepad1 Y/A) =====
+            if (gamepad1.y) {
                 intake.in();
-            } else if (gamepad1.a) { // '.a' refers to the Y button.
+            } else if (gamepad1.a) {
                 intake.out();
             } else {
                 intake.stop();
             }
 
-            
-           if (gamepad1.left_trigger) { // 'y' refers to the X button. This is true when held down.
-                spindexer.in();
-            } else if (gamepad1.left_bumper) { // '.a' refers to the Y button.
-                spindexer.out();
+            // ===== SPINDEXER (gamepad1: LT / LB) =====
+            if (gamepad1.left_trigger > 0.1) {
+                spindexerMotor.in();
+            } else if (gamepad1.left_bumper) {
+                spindexerMotor.out();
             } else {
-                spindexer.stop();
+                spindexerMotor.stop();
             }
 
-             if (gamepad2.left_trigger) { // 'y' refers to the X button. This is true when held down.
-                spindexer.in();
-            } else if (gamepad2.left_bumper) { // '.a' refers to the Y button.
-                spindexer.out();
+            // ===== SPINDEXER (gamepad2: LT / LB) =====
+            if (gamepad2.left_trigger > 0.1) {
+                spindexerMotor.in();
+            } else if (gamepad2.left_bumper) {
+                spindexerMotor.out();
             } else {
-                spindexer.stop();
+                spindexerMotor.stop();
             }
-            
+
+            // ===== OUTTAKE (gamepad2 X/B) =====
             if (gamepad2.x) {
-                outtake.in(); //right trigger causes the intake motor spin in(forwards)
-
-            } else if (gamepad2.b){
-                outtake.out(); //left trigger causes the intake motor to spin out(backwards)
-
+                outtakeMotor.in();   // in
+            } else if (gamepad2.b) {
+                outtakeMotor.out();  // out
             } else {
-                outtake.stop(); //none of the triggers are pressed then nothing happens(stops)!
+                outtakeMotor.stop(); // stop
             }
-
 
             // ===== FLIPPER SERVO (gamepad2 A/B/X) =====
             if (gamepad2.a) {
