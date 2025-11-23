@@ -13,6 +13,7 @@ public class DriveTeleOp extends LinearOpMode {
     // Subsystems
     private IntakeTeleOp intake;
     private OuttakeTeleOp outtakeMotor;
+    private SpindexerTeleOp spindexerMotor;
     private OuttakeServo flipper;
     private DualTorqueServos arm;   // two torque servos
 
@@ -44,6 +45,7 @@ public class DriveTeleOp extends LinearOpMode {
         // ---------- SUBSYSTEMS ----------
         intake       = new IntakeTeleOp(hardwareMap);
         outtakeMotor = new OuttakeTeleOp(hardwareMap);
+        spindexerMotor = new SpindexerTeleOp(hardwareMap);
         flipper      = new OuttakeServo(hardwareMap);
         arm          = new DualTorqueServos(hardwareMap);
 
@@ -90,6 +92,23 @@ public class DriveTeleOp extends LinearOpMode {
                 intake.stop();
             }
 
+            
+           if (gamepad1.left_trigger) { // 'y' refers to the X button. This is true when held down.
+                intake.in();
+            } else if (gamepad1.left_bumper) { // '.a' refers to the Y button.
+                intake.out();
+            } else {
+                intake.stop();
+            }
+
+             if (gamepad2.left_trigger) { // 'y' refers to the X button. This is true when held down.
+                intake.in();
+            } else if (gamepad2.left_bumper) { // '.a' refers to the Y button.
+                intake.out();
+            } else {
+                intake.stop();
+            }
+            
             if (gamepad2.x) {
                 outtake.in(); //right trigger causes the intake motor spin in(forwards)
 
