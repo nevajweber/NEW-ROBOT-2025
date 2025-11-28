@@ -28,7 +28,7 @@ public class DriveTeleOp extends LinearOpMode {
 
         // Directions (standard tank)
         FLW.setDirection(DcMotor.Direction.FORWARD);
-        BLW.setDirection(DcMotor.Direction.FORWARD);
+        BLW.setDirection(DcMotor.Direction.REVERSE);
         FRW.setDirection(DcMotor.Direction.REVERSE);
         BRW.setDirection(DcMotor.Direction.REVERSE);
 
