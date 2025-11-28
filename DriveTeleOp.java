@@ -17,6 +17,13 @@ public class DriveTeleOp extends LinearOpMode {
     private OuttakeServo flipper;
     private DualTorqueServos arm;   // two torque servos
 
+    private boolean isIntakeRunning = false;
+    private boolean intakeButtonPressed = false;
+
+    private boolean isOuttakeRunning = false;
+    private boolean outtakeButtonPressed = false;
+
+
     @Override
     public void runOpMode() throws InterruptedException {
 
@@ -84,14 +91,29 @@ public class DriveTeleOp extends LinearOpMode {
             FRW.setPower(rightPower);
             BRW.setPower(rightPower);
 
-            // ===== INTAKE (gamepad1 Y/A) =====
-            if (gamepad1.y) {
-                intake.in();
-            } else if (gamepad1.a) {
-                intake.out();
-            } else {
-                intake.stop();
-            }
+            
+            
+          // ===== INTAKE TOGGLE (gamepad1 Y button) =====
+
+if (gamepad1.y && !intakeButtonPressed) {
+    isIntakeRunning = !isIntakeRunning; // Flip the state (on to off, or off to on)
+    intakeButtonPressed = true;         
+} else if (!gamepad1.y) {
+    intakeButtonPressed = false;
+}
+
+
+if (isIntakeRunning) {
+    intake.in(); 
+} else {
+    intake.stop(); 
+}
+
+
+if (gamepad1.a) {
+    intake.out(); 
+
+}
 
             // ===== SPINDEXER (gamepad1: LT / LB) =====
             if (gamepad1.left_trigger > 0.1) {
@@ -111,14 +133,27 @@ public class DriveTeleOp extends LinearOpMode {
                 spindexerMotor.stop();
             }
 
-            // ===== OUTTAKE (gamepad2 X/B) =====
-            if (gamepad2.x) {
-                outtakeMotor.in();   // in
-            } else if (gamepad2.b) {
-                outtakeMotor.out();  // out
-            } else {
-                outtakeMotor.stop(); // stop
-            }
+           // ===== OUTTAKE TOGGLE (gamepad2 X button) =====
+
+if (gamepad2.x && !outtakeButtonPressed) {
+    isOuttakeRunning = !isOuttakeRunning; 
+    outtakeButtonPressed = true;          
+} else if (!gamepad2.x) {
+    outtakeButtonPressed = false;    
+}
+
+
+if (isOuttakeRunning) {
+    outtakeMotor.in(); 
+} else {
+    outtakeMotor.stop(); 
+}
+
+
+if (gamepad2.b) {
+    outtakeMotor.out(); 
+}
+
 
             // ===== FLIPPER SERVO (gamepad2 A/B/X) =====
             if (gamepad2.a) {
