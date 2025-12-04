@@ -1,8 +1,18 @@
+package org.firstinspires.ftc.teamcode;
+
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+
+// Limelight imports
+import org.firstinspires.ftc.teamcode.Limelight3A;
+import org.firstinspires.ftc.teamcode.LimelightTargetDetection;
+
 @Autonomous(name="Limelight Auto Align", group="Auto")
 public class LimelightAutoAlign extends LinearOpMode {
 
-    private DcMotor FLW, FRW, BLW, BRW;  // your motors
+    private Drive drive;   // uses YOUR Drive.java
 
+    // PID constants
     private double kP = 0.03;
     private double kD = 0.001;
     private double lastError = 0;
@@ -10,60 +20,47 @@ public class LimelightAutoAlign extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
-        FLW = hardwareMap.get(DcMotor.class, "frontLeft");
-        FRW = hardwareMap.get(DcMotor.class, "frontRight");
-        BLW = hardwareMap.get(DcMotor.class, "backLeft");
-        BRW = hardwareMap.get(DcMotor.class, "backRight");
+        // Initialize YOUR drive class
+        drive = new Drive(hardwareMap);
 
-        FRW.setDirection(DcMotorSimple.Direction.REVERSE);
-        BRW.setDirection(DcMotorSimple.Direction.REVERSE);
-
+        // Initialize Limelight
         Limelight3A limelight = hardwareMap.get(Limelight3A.class, "limelight");
+
+        telemetry.addLine("Ready!");
+        telemetry.update();
 
         waitForStart();
 
         while (opModeIsActive()) {
 
+            // Ask Limelight for the best target
             LimelightTargetDetection tgt = limelight.getTarget();
 
             if (tgt == null) {
-                telemetry.addLine("NO TAG FOUND");
-                stopMotors();
+                telemetry.addLine("NO TARGET FOUND");
+                drive.stop();
+                telemetry.update();
                 continue;
             }
 
-            // tx = horizontal offset
+            // Horizontal offset (left/right angle)
             double tx = tgt.x;
 
+            // PID correction
             double error = tx;
             double derivative = error - lastError;
-            double correction = kP * error + kD * derivative;
+            double correction = (kP * error) + (kD * derivative);
             lastError = error;
 
-          
-            double p = -correction;
+            // robot-centric strafe: negative = correct direction
+            double strafePower = -correction;
 
-            double flp = p;
-            double frp = -p;
-            double blp = -p;
-            double brp = p;
-
-            setMotorPowers(flp, frp, blp, brp);
+            // Apply with your Drive.java
+            drive.strafe(strafePower);
 
             telemetry.addData("tx", tx);
-            telemetry.addData("correction", correction);
+            telemetry.addData("PID Strafe Power", strafePower);
             telemetry.update();
         }
-    }
-
-    private void setMotorPowers(double flp, double frp, double blp, double brp) {
-        FLW.setPower(flp);
-        FRW.setPower(frp);
-        BLW.setPower(blp);
-        BRW.setPower(brp);
-    }
-
-    private void stopMotors() {
-        setMotorPowers(0, 0, 0, 0);
     }
 }
