@@ -1,0 +1,39 @@
+package org.firstinspires.ftc.teamcode;
+
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.Servo;
+public class HoodServo extends LinearOpMode {
+
+    Servo hoodServo;
+
+    double hoodPos = 0.5;   //middle ish
+    double speed = 0.01;    //speed of the hood
+
+    private boolean isOpen = false;       // Track cover state
+    private boolean buttonPressed = false;
+
+    @Override
+    public void runOpMode() {
+
+        hoodServo = hardwareMap.get(Servo.class, "hoodServo");
+
+        waitForStart();
+
+        while (opModeIsActive()) {
+
+            // left joy and Y to move hood
+            boolean input = gamepad1.dpad_down;
+            boolean input2 = gamepad1.dpad_up;
+
+
+            // adjust position
+            hoodPos += input ? -speed : input2 ? speed : 0;
+            hoodPos = Math.max(0.0, Math.min(1.0, hoodPos));
+            hoodServo.setPosition(hoodPos);
+
+            telemetry.addData("Hood Position", hoodPos);
+            telemetry.update();
+        }
+    }
+}
