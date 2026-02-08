@@ -27,8 +27,8 @@ public class DualServoHood extends LinearOpMode {
         hoodRight = hardwareMap.get(Servo.class, "hoodRight");
 
 
-        // Reverse one servo if mounted opposite
-        hoodRight.setDirection(Servo.Direction.REVERSE);
+        // Reverse ONE servo if mounted opposite
+        //hoodRight.setDirection(Servo.Direction.REVERSE);
 
 
         setHood(hoodPosition);
@@ -43,8 +43,9 @@ public class DualServoHood extends LinearOpMode {
             if (gamepad1.y) hoodPosition = 0.75; // high shot
 
             // Manual fine adjustment
-            if (gamepad1.dpad_up)   hoodPosition += 0.005;
-            if (gamepad1.dpad_down) hoodPosition -= 0.005;
+            if (gamepad1.dpad_up)   hoodPosition += 0.02;   // small step up
+            if (gamepad1.dpad_down) hoodPosition -= 0.02;   // small step down
+
 
             hoodPosition = clip(hoodPosition);
             setHood(hoodPosition);
