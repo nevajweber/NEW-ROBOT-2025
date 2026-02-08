@@ -1,3 +1,5 @@
+import com.qualcomm.robotcore.hardware.Servo;
+
 @TeleOp
 public class HoodServo extends LinearOpMode {
 
